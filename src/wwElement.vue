@@ -1,44 +1,12 @@
 <template>
     <div class="chart-container" style="position: relative">
-        <canvas id="chartjs-vertical-bar"></canvas>
+        <canvas id="chartjs-pie"></canvas>
     </div>
 </template>
 
 <script>
-import {
-    Chart,
-    BarElement,
-    BarController,
-    LinearScale,
-    LogarithmicScale,
-    RadialLinearScale,
-    TimeScale,
-    TimeSeriesScale,
-    Decimation,
-    Filler,
-    CategoryScale,
-    Legend,
-    Title,
-    Tooltip,
-    SubTitle,
-} from 'chart.js';
-
-Chart.register(
-    BarElement,
-    BarController,
-    LinearScale,
-    LogarithmicScale,
-    RadialLinearScale,
-    TimeScale,
-    TimeSeriesScale,
-    Decimation,
-    Filler,
-    CategoryScale,
-    Legend,
-    Title,
-    Tooltip,
-    SubTitle
-);
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 export default {
     props: {
@@ -51,32 +19,19 @@ export default {
     computed: {
         config() {
             return {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: this.content.labels,
                     datasets: this.content.datasets,
                 },
                 options: {
-                    indexAxis: this.content.axis,
+                    // indexAxis: this.content.axis,
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             position: this.content.legendPosition,
                             labels: { usePointStyle: true },
-                            onHover: this.handleHover,
-                            onLeave: this.handleLeave,
-                        },
-                    },
-                    interaction: {
-                        intersect: false,
-                    },
-                    scales: {
-                        x: {
-                            stacked: this.content.stacked,
-                        },
-                        y: {
-                            stacked: this.content.stacked,
                         },
                     },
                 },
@@ -122,7 +77,7 @@ export default {
     },
     methods: {
         initChart() {
-            const element = wwLib.getFrontDocument().getElementById('chartjs-vertical-bar');
+            const element = wwLib.getFrontDocument().getElementById('chartjs-pie');
             this.chartInstance = new Chart(element, this.config);
         },
     },
@@ -133,7 +88,7 @@ export default {
 .chart-container {
     width: inherit;
     height: inherit;
-    #chartjs-vertical-bar {
+    #chartjs-pie {
         width: 100% !important;
         height: 100% !important;
     }

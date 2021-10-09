@@ -1,4 +1,4 @@
-# WW-BASE
+# CHARTJS-PIE
 
 This is a section for Weweb. It's a very basic one with a background and a container
 

@@ -25,46 +25,19 @@ export default {
             responsive: true,
             defaultValue: 'top',
         },
-        legendAlignement: {
-            label: {
-                en: 'Legend alignement',
-                fr: 'Legend alignement',
-            },
-            type: 'TextSelect',
-            options: {
-                options: [
-                    { value: 'start', label: { en: 'Start' } },
-                    { value: 'center', label: { en: 'Center' } },
-                    { value: 'end', label: { en: 'End' } },
-                ],
-            },
-            bindable: true,
-            responsive: true,
-            defaultValue: 'center',
-        },
-        axis: {
-            label: { en: 'Axis', fr: 'Axis' },
-            type: 'BigIconRadioGroup',
-            options: {
-                choices: [
-                    { icon: 'align-bottom', value: 'x', label: 'X' },
-                    { icon: 'align-left', value: 'y', label: 'Y' },
-                ],
-            },
-            bindable: true,
-            responsive: true,
-            defaultValue: 'x',
-        },
-        stacked: {
-            type: 'OnOff',
-            label: {
-                en: 'Stacked bars',
-                fr: 'Stacked bars',
-            },
-            bindable: true,
-            responsive: true,
-            defaultValue: false,
-        },
+        // axis: {
+        //     label: { en: 'Axis', fr: 'Axis' },
+        //     type: 'BigIconRadioGroup',
+        //     options: {
+        //         choices: [
+        //             { icon: 'align-bottom', value: 'x', label: 'X' },
+        //             { icon: 'align-left', value: 'y', label: 'Y' },
+        //         ],
+        //     },
+        //     bindable: true,
+        //     responsive: true,
+        //     defaultValue: 'x',
+        // },
         labels: {
             label: {
                 en: 'Labels',
@@ -94,13 +67,8 @@ export default {
             defaultValue: [
                 {
                     label: 'Millenium Falcon',
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    data: [100.0, 5.0, 2.0, 20.0, 30.0, 10.0, 45.0],
-                },
-                {
-                    label: 'TIE Fighter',
-                    backgroundColor: '#F7AB49',
-                    data: [26, 42, 35, 48, 52, 24, 75],
+                    backgroundColor: ['#055B90', '#69C3FA', '#099AF2', '#E2F3FE'],
+                    data: [100.0, 5.0, 70.0, 20.0],
                 },
             ],
         },
