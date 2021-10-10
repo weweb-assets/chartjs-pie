@@ -50,7 +50,7 @@ export default {
             responsive: true,
             section: 'settings',
             bindable: 'list',
-            defaultValue: ['Tatooine', 'Coruscant', 'Kashyyyk', 'Dagobah', 'Bespin', 'Endor', 'Hoth'],
+            defaultValue: ['Tatooine', 'Coruscant', 'Kashyyyk', 'Dagobah'],
         },
         datasets: {
             label: {
