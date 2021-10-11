@@ -4,7 +4,7 @@ export default {
             fr: 'Chart - Bar',
             en: 'Chart - Bar',
         },
-        icon: 'fontawesome/regular/chart-bar',
+        icon: 'fontawesome/regular/chart-pie',
     },
     properties: {
         legendPosition: {
@@ -25,19 +25,6 @@ export default {
             responsive: true,
             defaultValue: 'top',
         },
-        // axis: {
-        //     label: { en: 'Axis', fr: 'Axis' },
-        //     type: 'BigIconRadioGroup',
-        //     options: {
-        //         choices: [
-        //             { icon: 'align-bottom', value: 'x', label: 'X' },
-        //             { icon: 'align-left', value: 'y', label: 'Y' },
-        //         ],
-        //     },
-        //     bindable: true,
-        //     responsive: true,
-        //     defaultValue: 'x',
-        // },
         labels: {
             label: {
                 en: 'Labels',

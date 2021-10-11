@@ -25,7 +25,6 @@ export default {
                     datasets: this.content.datasets,
                 },
                 options: {
-                    // indexAxis: this.content.axis,
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
