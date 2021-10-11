@@ -1,8 +1,8 @@
 export default {
     editor: {
         label: {
-            fr: 'Chart - Bar',
-            en: 'Chart - Bar',
+            fr: 'Chart - Pie',
+            en: 'Chart - Pie',
         },
         icon: 'fontawesome/solid/chart-pie',
     },
