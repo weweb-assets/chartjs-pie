@@ -4,7 +4,7 @@ export default {
             fr: 'Chart - Bar',
             en: 'Chart - Bar',
         },
-        icon: 'fontawesome/solit/chart-pie',
+        icon: 'fontawesome/solid/chart-pie',
     },
     properties: {
         legendPosition: {
