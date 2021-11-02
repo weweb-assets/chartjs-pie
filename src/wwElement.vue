@@ -1,6 +1,6 @@
 <template>
     <div class="chart-container" style="position: relative">
-        <canvas id="chartjs-pie"></canvas>
+        <canvas class="chartjs-pie"></canvas>
     </div>
 </template>
 
@@ -76,7 +76,7 @@ export default {
     },
     methods: {
         initChart() {
-            const element = wwLib.getFrontDocument().getElementById('chartjs-pie');
+            const element = this.$el.querySelector('.chartjs-pie');
             this.chartInstance = new Chart(element, this.config);
         },
     },
