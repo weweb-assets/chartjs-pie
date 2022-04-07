@@ -56,7 +56,7 @@ export default {
             options: { nullable: true },
         },
         dataType: {
-            label: 'Configuration',
+            label: 'Mode',
             type: 'TextSelect',
             options: {
                 options: [
@@ -226,12 +226,14 @@ export default {
             options: content => {
                 const data = (!content.data || Array.isArray(content.data) ? content.data : content.data.data) || [];
                 let field = _.get(data[0], content.dataYField);
-                if (Array.isArray(field) && field.length) field = _.get(field[0], content.dataYFieldProperty);
+                const isArray = Array.isArray(field);
+                if (Array.isArray(field) && field.length) field = _.get(field[0], content.dataYFieldProperty, field[0]);
                 const isNumber = Number.isFinite(data[0] && content.dataYField && field);
                 return {
                     placeholder: 'Select',
                     options: [
                         { value: 'distinct', label: 'Distinct' },
+                        isNumber && !isArray ? { value: 'value', label: 'Value' } : null,
                         isNumber ? { value: 'sum', label: 'Sum' } : null,
                         isNumber ? { value: 'average', label: 'Average' } : null,
                         isNumber ? { value: 'median', label: 'Median' } : null,
