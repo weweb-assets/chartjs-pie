@@ -18,11 +18,115 @@ export default {
     },
     computed: {
         config() {
+            let labels = [];
+            let datasets = [];
+
+            if (this.content.dataType === 'guided') {
+                let data =
+                    (!this.content.data || Array.isArray(this.content.data)
+                        ? this.content.data
+                        : this.content.data.data) || [];
+
+                const yAxis = this.content.yAxis;
+                let dataXField = this.content.dataXField;
+                let dataXFieldProperty = this.content.dataXFieldProperty;
+                let dataYField = yAxis === 'item-count' ? this.content.dataXField : this.content.dataYField;
+                let dataYFieldProperty = this.content.dataYFieldProperty;
+                let aggregate = yAxis === 'item-count' ? 'item-count' : this.content.aggregate;
+                const colors = this.content.colors;
+
+                if (typeof data[0] !== 'object') {
+                    data = data.map(value => ({ value }));
+                    dataXField = 'value';
+                    dataYFieldProperty = undefined;
+                    dataYField = 'value';
+                    dataXFieldProperty = undefined;
+                    aggregate = 'item-count';
+                }
+
+                datasets = [
+                    {
+                        label: `${dataXField}`.split("['").pop().replace("']", ''),
+                        backgroundColor: colors,
+                        data: [],
+                    },
+                ];
+                if (!data.length || !Array.isArray(_.get(data[0], dataXField))) {
+                    datasets[0].data = data.map(item => ({
+                        x: _.get(item, dataXField),
+                        y: this.aggregate(
+                            aggregate,
+                            data
+                                .filter(elem => _.get(elem, dataXField) === _.get(item, dataXField))
+                                .map(elem => _.get(elem, dataYField))
+                        ),
+                    }));
+                } else {
+                    const arrayValues = [
+                        ...new Set(
+                            data
+                                .map(item => {
+                                    const result = _.get(item, dataXField, []);
+                                    return Array.isArray(result)
+                                        ? result.map(elem => _.get(elem, dataXFieldProperty, elem))
+                                        : result;
+                                })
+                                .flat()
+                        ),
+                    ];
+                    datasets[0].data = arrayValues.map(arrayValue => ({
+                        x: arrayValue,
+                        y: this.aggregate(
+                            aggregate,
+                            data
+                                .filter(item => {
+                                    let result = _.get(item, dataXField, []);
+                                    result = Array.isArray(result)
+                                        ? result.map(elem => _.get(elem, dataXFieldProperty, elem))
+                                        : result;
+                                    return result.includes(arrayValue);
+                                })
+                                .map(item => {
+                                    const result = _.get(item, dataYField, []);
+                                    return Array.isArray(result)
+                                        ? result.map(elem => _.get(elem, dataYFieldProperty, elem))
+                                        : result;
+                                })
+                        ),
+                    }));
+                }
+
+                // Remove duplicate X values
+                for (const dataset of datasets) {
+                    dataset.data = dataset.data.filter(
+                        (item, index) => dataset.data.findIndex(elem => item.x === elem.x) === index
+                    );
+                }
+                // Order by
+                for (const item of datasets) {
+                    item.data.sort((a, b) => (typeof a.x === 'string' ? a.x.localeCompare(b.x) : a.x - b.x));
+                }
+                // Empty values
+                if (this.content.dataXEmpty === false) {
+                    for (const dataset of datasets) {
+                        dataset.data = dataset.data.filter(item => item.x && item.y);
+                    }
+                }
+                labels = [...new Set(datasets.map(dataset => dataset.data.map(elem => elem.x)).flat())];
+                // Format data
+                for (const dataset of datasets) {
+                    dataset.data = dataset.data.map(item => item.y);
+                }
+            } else {
+                labels = this.content.labels;
+                datasets = this.content.datasets || [];
+            }
+
             return {
                 type: 'pie',
                 data: {
-                    labels: this.content.labels,
-                    datasets: this.content.datasets,
+                    labels,
+                    datasets,
                 },
                 options: {
                     responsive: true,
@@ -30,7 +134,12 @@ export default {
                     plugins: {
                         legend: {
                             position: this.content.legendPosition,
-                            labels: { usePointStyle: true },
+                            align: this.content.legendAlignement,
+                            labels: {
+                                usePointStyle: true,
+                                color: this.content.legendColor,
+                                font: { size: parseInt(this.content.legendSize) },
+                            },
                         },
                     },
                 },
@@ -38,18 +147,15 @@ export default {
         },
     },
     watch: {
-        config() {
-            if (
-                this.chartInstance &&
-                this.content.labels &&
-                this.content.labels.length &&
-                this.content.datasets &&
-                this.content.datasets.length
-            ) {
-                this.chartInstance.data.labels = this.content.labels;
-                this.chartInstance.data.datasets = this.content.datasets;
-                this.chartInstance.update();
-            }
+        'config.data.datasets'() {
+            this.chartInstance.data.datasets = this.config.data.datasets;
+            if (this.chartInstance) this.chartInstance.destroy();
+            this.initChart();
+            this.chartInstance.update();
+        },
+        'config.data.labels'() {
+            this.chartInstance.data.labels = this.config.data.labels;
+            this.chartInstance.update();
         },
         'content.legendPosition'() {
             this.chartInstance.options.plugins.legend.position = this.content.legendPosition;
@@ -59,13 +165,25 @@ export default {
             this.chartInstance.options.plugins.legend.align = this.content.legendAlignement;
             this.chartInstance.update();
         },
-        'content.axis'() {
-            if (this.chartInstance) this.chartInstance.destroy();
-            this.initChart();
+        'content.legendColor'() {
+            this.chartInstance.options.plugins.legend.labels.color = this.content.legendColor;
+            this.chartInstance.update();
         },
-        'content.stacked'() {
-            if (this.chartInstance) this.chartInstance.destroy();
-            this.initChart();
+        'content.legendSize'() {
+            this.chartInstance.options.plugins.legend.labels.font.size = parseInt(this.content.legendSize);
+            this.chartInstance.update();
+        },
+        'content.dataYField'() {
+            // eslint-disable-next-line vue/require-explicit-emits
+            this.$emit('update:content:effect', { dataYFieldProperty: null });
+        },
+        'content.dataXField'() {
+            // eslint-disable-next-line vue/require-explicit-emits
+            this.$emit('update:content:effect', { dataXFieldProperty: null });
+        },
+        'content.groupBy'() {
+            // eslint-disable-next-line vue/require-explicit-emits
+            this.$emit('update:content:effect', { groupByProperty: null });
         },
     },
     mounted() {
@@ -78,6 +196,36 @@ export default {
         initChart() {
             const element = this.$el.querySelector('.chartjs-pie');
             this.chartInstance = new Chart(element, this.config);
+        },
+        aggregate(operator, data) {
+            if (!data) return undefined;
+            switch (operator) {
+                case 'item-count':
+                    return [data].flat().length;
+                case 'distinct':
+                    return [...new Set([data].flat())].length;
+                case 'sum':
+                    return this.sum([data].flat());
+                case 'average':
+                    return this.average([data].flat());
+                case 'median':
+                    return this.median([data].flat());
+                case 'min':
+                    return Math.min(...[data].flat());
+                case 'max':
+                    return Math.max(...[data].flat());
+            }
+        },
+        median(arr) {
+            const mid = Math.floor(arr.length / 2),
+                nums = [...arr].sort((a, b) => a - b);
+            return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+        },
+        sum(arr) {
+            return arr.reduce((a, b) => a + b, 0);
+        },
+        average(arr) {
+            return arr.reduce((a, b) => a + b, 0) / arr.length;
         },
     },
 };
