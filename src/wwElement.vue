@@ -103,8 +103,18 @@ export default {
                     );
                 }
                 // Order by
-                for (const item of datasets) {
-                    item.data.sort((a, b) => (typeof a.x === 'string' ? a.x.localeCompare(b.x) : a.x - b.x));
+                if (this.content.dataOrderBy !== 'default') {
+                    for (const item of datasets) {
+                        item.data.sort((a, b) => {
+                            const field = this.content.dataOrderBy;
+                            return (
+                                (typeof a[field] === 'string'
+                                    ? a[field].localeCompare(b[field])
+                                    : a[field] - b[field]) * (this.content.dataDirection === 'DESC' ? -1 : 1)
+                            );
+                        });
+                        item.data = item.data.map(item => ({ x: `${item.x}`, y: item.y }));
+                    }
                 }
                 // Empty values
                 if (this.content.dataXEmpty === false) {
@@ -219,7 +229,7 @@ export default {
                 case 'distinct':
                     return [...new Set([data].flat())].length;
                 case 'value':
-                    return data;
+                    return [data].flat()[0];
                 case 'sum':
                     return this.sum([data].flat());
                 case 'average':

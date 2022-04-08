@@ -155,6 +155,33 @@ export default {
                 );
             },
         },
+        dataOrderBy: {
+            label: 'Order by',
+            type: 'TextRadioGroup',
+            options: {
+                choices: [
+                    { value: 'default', label: 'Default' },
+                    { value: 'x', label: 'X value' },
+                    { value: 'y', label: 'Y value' },
+                ],
+            },
+            section: 'settings',
+            defaultValue: 'default',
+            hidden: content => !(content.dataType === 'guided' && isDataValid(content.data)),
+        },
+        dataDirection: {
+            type: 'TextRadioGroup',
+            options: {
+                choices: [
+                    { value: 'ASC', label: 'Ascending' },
+                    { value: 'DESC', label: 'Descending' },
+                ],
+            },
+            section: 'settings',
+            defaultValue: 'ASC',
+            hidden: content =>
+                !(content.dataType === 'guided' && content.dataOrderBy !== 'default' && isDataValid(content.data)),
+        },
         dataXEmpty: {
             label: 'Include empty values',
             type: 'OnOff',
