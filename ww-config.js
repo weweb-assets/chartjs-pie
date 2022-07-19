@@ -11,6 +11,25 @@ export default {
     editor: {
         label: 'Chart - Pie',
         icon: 'fontawesome/solid/chart-pie',
+        customStylePropertiesOrder: [
+            ['legendPosition', 'legendAlignement', 'legendColor', 'legendSize', 'legendColor'],
+        ],
+        customSettingsPropertiesOrder: [
+            'dataType',
+            ['labels', 'datasets'],
+            'data',
+            [
+                'dataError',
+                'xAxisTitle',
+                'dataXField',
+                'dataXFieldProperty',
+                'dataOrderBy',
+                'dataDirection',
+                'dataXEmpty',
+            ],
+            ['yAxis', 'dataYField', 'dataYFieldProperty', 'aggregate'],
+            ['colors'],
+        ],
     },
     properties: {
         isLegend: {
