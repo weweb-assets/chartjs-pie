@@ -18,8 +18,8 @@ export default {
             'dataType',
             ['labels', 'datasets'],
             'data',
+            'dataError',
             [
-                'dataError',
                 'xAxisTitle',
                 'dataXField',
                 'dataXFieldProperty',
