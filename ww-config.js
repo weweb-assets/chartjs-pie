@@ -12,7 +12,7 @@ export default {
         label: 'Chart - Pie',
         icon: 'fontawesome/solid/chart-pie',
         customStylePropertiesOrder: [
-            ['isLegend', 'legendPosition', 'legendAlignement', 'legendSize', 'legendColor'],
+            ['displayType', 'isLegend', 'legendPosition', 'legendAlignement', 'legendSize', 'legendColor'],
         ],
         customSettingsPropertiesOrder: [
             'dataType',
@@ -32,6 +32,18 @@ export default {
         ],
     },
     properties: {
+        displayType: {
+            label: 'Display type',
+            type: 'TextSelect',
+            options: {
+                options: [
+                    { value: 'pie', label: 'Pie' },
+                    { value: 'doughnut', label: 'Donut' },
+                ],
+            },
+            responsive: true,
+            defaultValue: 'pie',
+        },
         isLegend: {
             label: 'Legend',
             type: 'OnOff',
