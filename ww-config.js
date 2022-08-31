@@ -41,6 +41,7 @@ export default {
                     { value: 'doughnut', label: 'Donut' },
                 ],
             },
+            bindable: true,
             responsive: true,
             defaultValue: 'pie',
         },
