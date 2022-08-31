@@ -133,7 +133,7 @@ export default {
             }
 
             return {
-                type: 'pie',
+                type: this.content.displayType,
                 data: {
                     labels,
                     datasets,
@@ -167,6 +167,10 @@ export default {
         'config.data.labels'() {
             this.chartInstance.data.labels = this.config.data.labels;
             this.chartInstance.update();
+        },
+        'content.displayType'() {
+            if (this.chartInstance) this.chartInstance.destroy();
+            this.initChart();
         },
         'content.isLegend'() {
             this.chartInstance.options.plugins.legend.display = this.content.isLegend;
