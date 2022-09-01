@@ -30,7 +30,7 @@ export default {
                 let dataYField = yAxis === 'item-count' ? this.content.dataXField : this.content.dataYField;
                 let dataYFieldProperty = this.content.dataYFieldProperty;
                 let aggregate = yAxis === 'item-count' ? 'item-count' : this.content.aggregate;
-                const colors = this.content.colors;
+                const colors = Array.isArray(this.content.colors) ? this.content.colors : [];
 
                 if (typeof data[0] !== 'object') {
                     data = data.map(value => ({ value }));
