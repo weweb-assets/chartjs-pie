@@ -23,6 +23,7 @@ export default {
 
             if (this.content.dataType === 'guided') {
                 let data = wwLib.wwCollection.getCollectionData(this.content.data) || []
+                data = Array.isArray(data) ? data : []
 
                 const yAxis = this.content.yAxis;
                 let dataXField = this.content.dataXField;
