@@ -16,7 +16,7 @@ export default {
         ],
         customSettingsPropertiesOrder: [
             'dataType',
-            ['labels', 'datasets'],
+            ['labels', 'datasets', 'options'],
             'data',
             'dataError',
             [
@@ -134,6 +134,32 @@ export default {
                     data: [100.0, 5.0, 70.0, 20.0],
                 },
             ],
+            hidden: content => content.dataType !== 'advanced',
+        },
+        options: {
+            label: 'Options',
+            type: 'Info',
+            options: {
+                text: 'Chart options',
+            },
+            responsive: true,
+            section: 'settings',
+            bindable: 'list',
+            defaultValue: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'left',
+                        align: 'start',
+                        labels: {
+                            usePointStyle: true,
+                            color: 'black',
+                            font: { size: 12 },
+                        },
+                    },
+                },
+                responsive: true,
+            },
             hidden: content => content.dataType !== 'advanced',
         },
         data: {
