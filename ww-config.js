@@ -14,7 +14,7 @@ function isDataArrayObject(data) {
 export default {
     editor: {
         label: 'Chart - Pie',
-        icon: 'fontawesome/solid/chart-pie',
+        icon: 'logos/chartjs',
         customStylePropertiesOrder: [
             ['displayType', 'isLegend', 'legendPosition', 'legendAlignement', 'legendSize', 'legendColor'],
         ],
