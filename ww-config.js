@@ -41,6 +41,7 @@ export default {
             bindable: true,
             responsive: true,
             defaultValue: 'pie',
+            hidden: content => content.dataType === 'advanced',
             /* wwEditor:start */
             bindingValidation: {
                 type: 'string',
