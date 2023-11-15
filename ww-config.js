@@ -28,6 +28,16 @@ export default {
             ['colors'],
         ],
     },
+    triggerEvents: [
+        {
+            name: 'chart:click',
+            label: { en: 'On chart click' },
+            event: {
+                position: { x: 0, y: 0 },
+                points: [{ label: '', value: 0, index: 0, datasetIndex: 0 }],
+            },
+        },
+    ],
     properties: {
         displayType: {
             label: 'Display type',
