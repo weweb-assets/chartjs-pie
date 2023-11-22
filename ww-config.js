@@ -145,6 +145,16 @@ export default {
             classes: true,
             hidden: content => content.dataType === 'advanced' || !content.isLegend,
         },
+        axisColor: {
+            label: 'Axis Color',
+            type: 'Color',
+            options: { nullable: true },
+            bindable: true,
+            responsive: true,
+            states: true,
+            classes: true,
+            hidden: content => content.dataType === 'advanced' || !content.isLegend,
+        },
         dataType: {
             label: 'Mode',
             type: 'TextSelect',
