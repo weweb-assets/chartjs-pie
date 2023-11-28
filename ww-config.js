@@ -145,8 +145,8 @@ export default {
             classes: true,
             hidden: content => content.dataType === 'advanced' || !content.isLegend,
         },
-        axisColor: {
-            label: 'Axis Color',
+        labelColor: {
+            label: 'Label color',
             type: 'Color',
             options: { nullable: true },
             bindable: true,
