@@ -29,7 +29,7 @@ export default {
                         align: this.content.legendAlignement,
                         labels: {
                             usePointStyle: true,
-                            color: this.content.legendColor,
+                            color: wwLib.getStyleFromToken(this.content.legendColor) || this.content.legendColor,
                             font: { size: parseInt(this.content.legendSize) },
                         },
                     },
@@ -228,7 +228,7 @@ export default {
             this.chartInstance.update();
         },
         'content.legendColor'() {
-            this.chartInstance.options.plugins.legend.labels.color = this.content.legendColor;
+            this.chartInstance.options.plugins.legend.labels.color = wwLib.getStyleFromToken(this.content.legendColor) || this.content.legendColor;
             this.chartInstance.update();
         },
         'content.legendSize'() {
