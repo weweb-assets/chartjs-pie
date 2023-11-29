@@ -16,7 +16,7 @@ export default {
         label: 'Chart - Pie',
         icon: 'logos/chartjs',
         customStylePropertiesOrder: [
-            ['displayType', 'isLegend', 'legendPosition', 'legendAlignement', 'legendSize', 'legendColor'],
+            ['displayType', 'isLegend', 'legendPosition', 'legendAlignement', 'legendSize'],
         ],
         customSettingsPropertiesOrder: [
             'dataType',
@@ -137,16 +137,6 @@ export default {
         },
         legendColor: {
             label: 'Color',
-            type: 'Color',
-            options: { nullable: true },
-            bindable: true,
-            responsive: true,
-            states: true,
-            classes: true,
-            hidden: content => content.dataType === 'advanced' || !content.isLegend,
-        },
-        labelColor: {
-            label: 'Label color',
             type: 'Color',
             options: { nullable: true },
             bindable: true,
