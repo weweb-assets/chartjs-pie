@@ -53,7 +53,7 @@ export default {
                 let dataYField = yAxis === 'item-count' ? this.content.dataXField : this.content.dataYField;
                 let dataYFieldProperty = this.content.dataYFieldProperty;
                 let aggregate = yAxis === 'item-count' ? 'item-count' : this.content.aggregate;
-                const colors = Array.isArray(this.content.colors) ? this.content.colors : [];
+                const colors = Array.isArray(this.content.colors) ? this.content.colors.map(color => wwLib.getStyleFromToken(color) || color) : [];
 
                 if (typeof data[0] !== 'object') {
                     data = data.map(value => ({ value }));
