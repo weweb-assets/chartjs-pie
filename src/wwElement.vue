@@ -44,7 +44,7 @@ export default {
             let datasets = [];
 
             if (this.content.dataType === 'guided') {
-                let data = wwLib.wwCollection.getCollectionData(this.content.data) || [];
+                let data = wwLib.wwUtils.getDataFromCollection(this.content.data) || [];
                 data = Array.isArray(data) ? data : [];
 
                 const yAxis = this.content.yAxis;
