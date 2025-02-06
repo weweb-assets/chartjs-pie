@@ -16,10 +16,10 @@ Properties:
 - legendSize: string (px) - Sets legend font size
 - legendColor: string - Defines legend text color
 - dataType: string ("guided" | "advanced") - Sets the configuration mode
-- labels: array - Chart labels (advanced mode)
-- datasets: array - Chart datasets configuration (advanced mode)
-- options: object - Chart.js configuration options
-- data: array - Data collection for guided mode
+- labels: binded<string[]> - X-axis labels. advanced mode only.
+- datasets: binded<object[]> - Dataset objects with label, backgroundColor, borderColor, data keys. advanced mode only.
+- options: binded<object> - Advanced chart options. advanced mode only.
+- data: binded<object[]> - Data array. guided mode only.
 - dataXField: string - Field name for categories
 - dataXFieldProperty: string - Nested property for category field
 - dataOrderBy: string ("default" | "x" | "y") - Data sorting field
@@ -33,37 +33,9 @@ Properties:
 
 Events:
 - chart:click: Triggered when clicking on the chart
-  - position: {x: number, y: number}
-  - points: [{label: string, value: number, index: number, datasetIndex: number}]
+- position: {x: number, y: number}
+- points: [{label: string, value: number, index: number, datasetIndex: number}]
 
-Example:
-```json
-{
-  "tag": "chartjs-pie",
-  "props": {
-    "default": {
-      "displayType": "pie",
-      "isLegend": true,
-      "legendPosition": "right",
-      "legendAlignement": "center",
-      "legendSize": "12px",
-      "dataType": "advanced",
-      "labels": ["Category A", "Category B", "Category C"],
-      "datasets": [{
-        "label": "Dataset 1",
-        "backgroundColor": ["#FF6384", "#36A2EB", "#FFCE56"],
-        "data": [30, 50, 20]
-      }],
-      "options": {
-        "responsive": true,
-        "plugins": {
-          "legend": {
-            "display": true,
-            "position": "right"
-          }
-        }
-      }
-    }
-  }
-}
-```
+Note: 
+- To make graph responsive: First, always set these options : responsive: true and maintainAspectRatio: false, Second, set min-width: 0px to direct parent container.
+- **IMPORTANT** labels, datasets, options and data properties HAVE TO BE BINDED data
