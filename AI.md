@@ -15,11 +15,10 @@ Properties:
 - legendAlignement: string ("start" | "center" | "end") - Controls legend alignment
 - legendSize: string (px) - Sets legend font size
 - legendColor: string - Defines legend text color
-- dataType: string ("guided" | "advanced") - Sets the configuration mode
+- dataType: string - Sets the configuration mode. **CRITICAL** Always set to "advanced".
 - labels: binded<string[]> - X-axis labels. advanced mode only.
 - datasets: binded<object[]> - Dataset objects with label, backgroundColor, borderColor, data keys. advanced mode only.
 - options: binded<object> - Advanced chart options. advanced mode only.
-- data: binded<object[]> - Data array. guided mode only.
 - dataXField: string - Field name for categories
 - dataXFieldProperty: string - Nested property for category field
 - dataOrderBy: string ("default" | "x" | "y") - Data sorting field
