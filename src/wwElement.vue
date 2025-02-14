@@ -148,7 +148,13 @@ export default {
                     dataset.data = dataset.data.map(item => item.y);
                 }
             } else {
-                labels = this.content.labels;
+                if(!this.content.labels) {
+                    labels = [];
+                } else if(!Array.isArray(this.content.labels)) {
+                    labels = Object.values(this.content.labels);
+                } else {
+                    labels = this.content.labels;
+                }
                 datasets = this.content.datasets || [];
             }
 
@@ -267,11 +273,24 @@ export default {
     },
     beforeUnmount() {
         this.chartInstance.destroy();
+        this.chartInstance = null;
     },
     methods: {
         initChart() {
-            const element = this.$el.querySelector('.chartjs-pie');
-            this.chartInstance = new Chart(element, this.config);
+            try {
+                if (this.chartInstance) {
+                    this.chartInstance.destroy();
+                    this.chartInstance = null;
+                }
+                const element = this.$el.querySelector('.chartjs-pie');
+                if (!element) {
+                    console.error('Canvas element not found');
+                    return;
+                }
+                this.chartInstance = new Chart(element, this.config);
+            } catch (error) {
+                console.error('Failed to initialize chart:', error);
+            }
         },
         aggregate(operator, data) {
             if (!data) return undefined;
