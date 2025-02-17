@@ -6,7 +6,9 @@
 
 <script>
 import { Chart, registerables } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { getRelativePosition } from 'chart.js/helpers';
+
 Chart.register(...registerables);
 
 export default {
@@ -160,6 +162,10 @@ export default {
             }
 
             return {
+                // Add chart data labels plugin if datalabels key is in labels object or datasets object
+                plugins: [
+                    ...(this.options?.plugins?.datalabels || datasets.some(dataset => dataset.datalabels) ? [ChartDataLabels] : []),
+                ],
                 type: this.content.displayType,
                 data: {
                     labels,
